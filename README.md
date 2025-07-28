@@ -10,7 +10,7 @@ This repository contains a GitHub Actions workflow that automatically runs build
 .
 ├── .github/
 │   └── workflows/
-│       └── pr-build-check.yml
+│       └── pr-build.yml
 ├── package.json
 ├── package-lock.json
 └── README.md
