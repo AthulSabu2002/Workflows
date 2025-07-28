@@ -1,53 +1,93 @@
-# PR Build Check
+# PR Build Check Workflow
 
 ## Overview
 
-This repository contains a GitHub Actions workflow that automatically runs build checks on pull requests to the main branch.
+A GitHub Actions workflow that automatically runs build checks on pull requests. This ensures all PRs are tested before merging into your main branch.
 
-## Repository Structure
+## What This Workflow Does
 
+When someone creates a pull request to your `main` branch, this workflow will:
+
+1. Check out the code
+2. Set up Node.js v22 with npm caching
+3. Install dependencies with `npm ci`
+4. Run your build command with `npm run build`
+
+## How to Add This to Your Project
+
+### Step 1: Copy the Workflow File
+
+1. In your repository, create the folder structure: `.github/workflows/`
+2. Create a new file called `pr-build-check.yml` inside the `workflows` folder
+3. Copy and paste the workflow code (shown at the bottom of this README)
+
+### Step 2: Ensure Your Project is Ready
+
+Your project needs:
+
+- A `package.json` file with a `build` script
+- Example `package.json`:
+```json
+{
+  "name": "your-project",
+  "scripts": {
+    "build": "your-build-command-here"
+  }
+}
 ```
-.
-├── .github/
-│   └── workflows/
-│       └── pr-build.yml
-├── package.json
-├── package-lock.json
-└── README.md
+
+### Step 3: Test It
+
+1. Create a test branch: `git checkout -b test-workflow`
+2. Make any small change and commit it
+3. Push the branch: `git push origin test-workflow`
+4. Create a pull request to `main`
+5. You should see the "PR Build Check" running in the PR
+
+## Optional: Require This Check Before Merging
+
+To make this build check mandatory before merging PRs:
+
+1. Go to your repository **Settings** → **Branches**
+2. Click "Add branch protection rule"
+3. Set branch name pattern to: `main`
+4. Check "Require status checks to pass before merging"
+5. In the search box, type: **PR Build Check**
+6. Select it and click "Save changes"
+
+Now no one can merge a PR until the build passes!
+
+## Common Build Scripts
+
+Depending on your project type, add one of these to your `package.json`:
+
+**React/Vite:**
+```json
+"scripts": {
+  "build": "vite build"
+}
 ```
 
-## Workflow Details
+**Next.js:**
+```json
+"scripts": {
+  "build": "next build"
+}
+```
 
-The workflow (`PR Build Check`) triggers on pull requests to the main branch and performs the following steps:
+**TypeScript:**
+```json
+"scripts": {
+  "build": "tsc"
+}
+```
 
-1. Checks out the code
-2. Sets up Node.js v22 with npm caching
-3. Installs dependencies with `npm ci`
-4. Runs the build command with `npm run build`
-
-## Setup Instructions
-
-1. Create a `package.json` file with a `build` script
-2. Ensure your project builds successfully with `npm run build`
-3. Push the workflow file to `.github/workflows/pr-build-check.yml`
-
-## Branch Protection
-
-You can protect the main branch by requiring this workflow to pass before merging:
-
-1. Go to **Settings** → **Branches** in your repository
-2. Add a branch protection rule for `main`
-3. Enable "Require status checks to pass before merging"
-4. Search for and select the status check: **PR Build Check**
-5. Save the protection rule
-
-This ensures all pull requests must pass the build check before they can be merged into main.
-
-## Requirements
-
-- Node.js project with `package.json`
-- Build script defined in `package.json`
-- npm lockfile (`package-lock.json`)
+**Custom:**
+```json
+"scripts": {
+  "build": "your-build-command"
+}
+```
 
 ## Workflow File
 
