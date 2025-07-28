@@ -91,7 +91,7 @@ Depending on your project type, add one of these to your `package.json`:
 
 ## Workflow File
 
-The workflow is located at `.github/workflows/pr-build-check.yml`:
+The workflow is located at `.github/workflows/pr-build.yml`:
 
 ```yaml
 name: PR Build Check
